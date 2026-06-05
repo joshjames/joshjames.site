@@ -1,0 +1,171 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Bypasses Astro compression. Implements the macro-styling pattern from VapeFinder.
+const autoplatformTopology = `graph TD
+    classDef orchestration stroke:#2dd4bf,fill:#115e59,color:#cbd5e1;
+    classDef sandbox stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+    classDef infra stroke:#f472b6,fill:#301121,color:#cbd5e1;
+    classDef network stroke:#fb923c,fill:#431407,color:#cbd5e1;
+
+    subgraph UserTier ["Control Interface & App Store"]
+        WebUI[Next.js Agent Conversational UI]
+        MobileAPK[Autoplatform Client Mobile App Store]
+    end
+
+    subgraph AgentTier ["AI Engine & Context Injection"]
+        AIAgent[Autonomous AI Core Agent]
+        ToolBelt[Global Automation Toolset]
+        InfoFile[.info Customization Specs Injector]
+    end
+
+    subgraph NodeEngine ["Orchestration Core (Node.js)"]
+        NodeCore[Node.js Execution Runtime Engine]
+        Dockerode[Dockerode Control Layer API]
+    end
+
+    subgraph ClusterTier ["Multi-Tenant Infrastructure Plane"]
+        K8sCluster[Isolated Kubernetes Cluster Matrix]
+        subgraph Pods ["Isolated Forked App Instances"]
+            Docs[Self-Hosted Document Collaboration]
+            Storage[S3 Object Storage & Web Browser]
+            Media[Jellyfin/Spotify Media Engines]
+            Ecom[Private E-Commerce/Social Apps]
+        end
+    end
+
+    %% Interaction Paths
+    WebUI -->|"1. User Natural Language Intent"| AIAgent
+    AIAgent --> ToolBelt
+    ToolBelt -->|"2. Read Layout Constraints"| InfoFile
+    ToolBelt -->|"3. Fire RPC Execution Tasks"| NodeCore
+    NodeCore --> Dockerode
+    Dockerode -->|"4. Provision & Mutate"| K8sCluster
+
+    %% Infrastructure Routing
+    K8sCluster --> Pods
+    Pods -->|"5. Dynamic Ingress Provisioning"| NetworkRoute[Dynamic DNS Routing: *.myapo.cloud]
+    MobileAPK -->|"Secure Connection"| NetworkRoute
+    NetworkRoute --> WebUI
+
+    %% Apply Macro Layout Class Styles
+    class WebUI,MobileAPK orchestration;
+    class AIAgent,ToolBelt,InfoFile sandbox;
+    class NodeCore,Dockerode infra;
+    class K8sCluster,Docs,Storage,Media,Ecom network;
+`;
+---
+<Layout title="AutoPlatform: AI-Driven Cloud Infrastructure Orchestrator | Josh James">
+
+        
+        <div class="border-b border-[#334155] pb-4 mb-6">
+            <h1>/sys/portfolio/autoplatform</h1>
+            <p class="text-xs text-[#64748b] font-mono mt-1">SYSTEM ARCHITECTURE: AUTONOMOUS INFRASTRUCTURE GENERATION & PRIVATE CLOUD PROVISIONING</p>
+        </div>
+
+        <div class="space-y-8 font-sans text-sm text-[#cbd5e1] leading-relaxed">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs">
+                <div><span class="text-[#64748b] block">PROJECT:</span> AutoPlatform.online</div>
+                <div><span class="text-[#64748b] block">ENGINE:</span> Node.js / Dockerode Core</div>
+                <div><span class="text-[#64748b] block">ORCHESTRATION:</span> Kubernetes (K8s Cluster)</div>
+                <div><span class="text-[#64748b] block">NETWORK MAPPING:</span> Dynamic Ingress Wildcards</div>
+            </div>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// System Overview</h3>
+                <p>
+                    AutoPlatform is an advanced autonomous infrastructure management engine built to decouple consumers from predatory, data-harvesting big-tech cloud monoliths. It combines standard Model Protocol AI agents with an automated hardware virtualization engine. Through a clean natural language web interface, users can programmatically spin up, customize, configure, and maintain completely private, self-hosted alternatives to mainstream digital platforms.
+                </p>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Infrastructure Pipeline Topology</h3>
+                <p class="text-xs text-[#64748b]">System workflow tracking natural language compilation down to containerized infrastructure instances:</p>
+                
+                <div class="bg-[#1e293b] p-4 rounded border border-[#334155] overflow-x-auto">
+                    <div class="mermaid" set:html={autoplatformTopology}></div>
+                </div>
+            </section>
+
+            <section class="space-y-4">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Technical Deep Dive & Execution Layers</h3>
+                <p>The platform eliminates technical configuration complexity by running execution workloads through a highly secure, tiered pipeline:</p>
+                
+                <div class="space-y-4 font-mono text-xs text-[#cbd5e1]">
+                    <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                        <strong class="text-[#38bdf8] block">1. The Conversational API Layer & Automation Tool-Belt</strong>
+                        <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                            The frontend provides an intuitive conversational interface where users describe what platforms they require. Behind the scenes, the AI isn't simply generating static text; it is equipped with a complex automation tool-belt and server-level execution tools. When a user selects a service icon, the action automatically instantiates a backend context payload detailing the infrastructure target.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                        <strong class="text-[#38bdf8] block">2. Upstream Context Injection via Immutable `.info` Descriptors</strong>
+                        <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                            To ensure the AI modifies source code and environment states safely without corrupting base images, every template container carries an immutable `.info` file. This file functions as a context injection vector, providing the AI with specific runtime instructions, directory mapping requirements, variable configuration boundaries, and file manipulation protocols unique to that specific service.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                        <strong class="text-[#38bdf8] block">3. The Node.js Dockerode Core & Kubernetes Sandbox</strong>
+                        <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                            The core automation backend is written in Node.js, utilizing `dockerode` to interact directly with internal container runtimes. Workloads are scheduled inside a high-availability Kubernetes cluster configured with strict multi-tenant network policies. This guarantees total resource isolation and network data sandboxing across distinct user environments.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Curated Open-Source Service Matrix</h3>
+                <p>
+                    AutoPlatform aggregates, maintains, and automatically updates custom, security-hardened forks of the web's finest open-source alternatives to global cloud apps:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 font-mono text-xs text-[#cbd5e1]">
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>Cloud Office:</strong> Web-based real-time document collaboration suites.</div>
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>S3 Core Storage:</strong> Independent file managers & object browsers.</div>
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>Media Platforms:</strong> Private music streams & self-hosted streaming video nodes.</div>
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>E-Commerce Engines:</strong> Secure transaction handling & digital merchant grids.</div>
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>Network Security:</strong> Independent DNS services & private registration routers.</div>
+                    <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong>Social Infrastructure:</strong> Decentralized photo streams and communication hubs.</div>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Zero-Config Client Synchronization</h3>
+                <p>
+                    The defining element of AutoPlatform's ease of use is its seamless consumer deployment funnel. Once an infrastructure stack is initialized via `autoplatform.online`, users can access an integrated, custom app directory.
+                </p>
+                <p>
+                    By installing the secure client container applications on their mobile devices, authentication handshakes occur transparently. The software communicates directly with the user's isolated sub-domain network layout:
+                </p>
+                <div class="bg-[#1e293b]/30 p-4 rounded border border-[#334155] font-mono text-xs text-center text-[#38bdf8]">
+                    username.myapo.cloud  ➔  [Secure Ingress Router]  ➔  Isolated Kubernetes Pod
+                </div>
+                <p>
+                    The client applications automatically link to the private `apo.cloud` instance parameters. This gives non-technical users total data sovereignty, uncompressed storage architecture capabilities, and full access to private cloud services without any manual terminal interactions.
+                </p>
+            </section>
+
+        </div>
+
+</Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({
+            theme: 'dark',
+            startOnLoad: true,
+            securityLevel: 'loose',
+            themeVariables: {
+                background: '#1e293b',
+                primaryColor: '#131d31',
+                primaryTextColor: '#38bdf8',
+                lineColor: '#334155',
+                fontSize: '12px',
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
+            }
+        });
+    });
+</script>

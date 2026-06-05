@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact & Overview | Josh James">
+	<h1>[JJ] /usr/bin/josh-james --contact-info</h1>
+
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+		<!-- Profile / Image Anchor Column -->
+		<div class="md:col-span-1 flex flex-col items-center md:items-start space-y-4">
+			<div class="w-full aspect-square max-w-[240px] bg-[#1e293b] border-2 border-[#334155] rounded-lg overflow-hidden flex items-center justify-center">
+            <!-- Point this directly to your public images path -->
+            <img src="/images/josh.png" alt="Josh James" class="w-full h-full object-cover grayscale contrast-125" />
+        </div>
+			<div class="text-xs text-[#64748b] space-y-1 font-mono">
+				<p>LOC: Brisbane, QLD, AU</p>
+				<p>TZ: AEST (UTC+10)</p>
+			</div>
+		</div>
+
+		<!-- Direct Routing Channels -->
+		<div class="md:col-span-2 space-y-6 font-mono">
+			<div>
+				<h3 class="text-[#34d399] text-sm uppercase tracking-wider mb-2">// Primary Comm Links</h3>
+				<ul class="space-y-3 text-sm">
+					<li class="flex items-center">
+						<span class="text-[#64748b] w-20">EMAIL:</span>
+						<a href="mailto:josh@joshjames.site" class="hover:underline text-[#38bdf8]">josh@joshjames.site</a>
+					</li>
+					<li class="flex items-center">
+						<span class="text-[#64748b] w-20">BACKUP:</span>
+						<a href="mailto:joshsaunders@gmail.com" class="hover:underline text-[#475569]">joshsaunders@gmail.com</a>
+					</li>
+					<li class="flex items-center">
+						<span class="text-[#64748b] w-20">MOBILE:</span>
+						<a href="tel:+61435872159" class="hover:underline text-[#38bdf8]">0435 872 159</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="pt-4 border-t border-[#334155]">
+				<h3 class="text-[#34d399] text-sm uppercase tracking-wider mb-2">// Infrastructure Overview</h3>
+				<p class="text-sm text-[#cbd5e1] leading-relaxed font-sans">
+					Senior Systems Infrastructure Architect specializing in multi-cloud topology, high-performance computing pipelines, and decoupled transaction systems. I engineer deterministic, highly isolated computing platforms designed to survive architectural entropy and malicious edge loads.
+				</p>
+			</div>
+		</div>
+	</div>
+</Layout>

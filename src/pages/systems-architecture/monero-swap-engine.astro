@@ -1,0 +1,189 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const mermaidGraph = `graph TB
+    subgraph Clients["📱 Ingress & Gateway Layer"]
+        wfe["WFE (Web Front-End)"]
+        adminDash["Admin Queue Dashboard<br/>(BullBoard + Bearer Auth)"]
+        apiGateway["Express.js Core API Gateway<br/>/api/monero-account/* & /api/bitcoin/*"]
+    end
+
+    subgraph Queues["⚡ Asynchronous Event Broker (BullMQ)"]
+        txQueue["Monero/BTC Transaction Queue<br/>(Attempts: 3, Exponential Backoff)"]
+        taskQueue["Scheduled Tasks Queue<br/>(Cron: 3min / 5min Balance Sync)"]
+        ratesQueue["Rates Fetching Queue<br/>(Attempts: 5, Memory-Cached)"]
+    end
+
+    subgraph Processing["⚙️ Stateless Worker Nodes & Business Logic"]
+        txWorker["Transaction Processor Worker<br/>(Saga State Machine Handling)"]
+        taskWorker["Scheduled Maintenance Worker<br/>(Balance Sync / Block Monitors)"]
+        ratesWorker["Exchange Rate Aggregate Worker"]
+        
+        subgraph Services["Core Abstract Engines"]
+            btcService["Bitcoin Wallet Manager<br/>(bcoin Library Abstraction)"]
+            xmrAccountService["Monero Account-Based Service<br/>(moneroAccountClient / monero-ts)"]
+            ownershipService["Wallet Ownership Manager<br/>(State Transfers: Order ➔ Escrow ➔ Vendor)"]
+        end
+    end
+
+    subgraph Cache["🛑 In-Memory State & Cache Layer (Redis)"]
+        redisMap["bitcoin:order:account:map<br/>monero:order:account:map"]
+        redisTag["monero:tag:order_{orderId}<br/>(Account Indices Mapping)"]
+        redisHistory["ownership:history:{walletId}"]
+    end
+
+    subgraph DB["💾 Hardened Enterprise Storage"]
+        mysqlDB[("MySQL Database<br/>(Administrative Interface State)")]
+    end
+
+    subgraph Chains["⛓️ Cryptographic Network Integrations"]
+        bcoinNode["Bitcoin RPC Node<br/>(Master Account Wallets)"]
+        moneroRPC["Monero Wallet RPC Daemon<br/>(Master Multi-Account Architecture)"]
+    end
+
+    %% Routing Data Flow
+    wfe -->|"HTTPS / REST"| apiGateway
+    adminDash -->|"Admin Dashboard Route"| apiGateway
+    
+    apiGateway -->|"Producer: Add Jobs"| txQueue
+    apiGateway -->|"Producer"| taskQueue
+    apiGateway -->|"Producer"| ratesQueue
+
+    %% Worker Execution
+    txQueue -->|"Consumer"| txWorker
+    taskQueue -->|"Consumer"| taskWorker
+    ratesQueue -->|"Consumer"| ratesWorker
+
+    %% Service Interaction
+    txWorker --> Services
+    taskWorker --> Services
+    ratesWorker --> Services
+
+    %% Redis State Maps
+    Services -->|"Atomic State Reads / Token Sync"| Cache
+    apiGateway -->|"Direct Metadata Checks"| Cache
+
+    %% Database Operations
+    apiGateway -->|"Persist Admin Metrics"| mysqlDB
+
+    %% RPC Daemon Operations
+    btcService -->|"bcoin RPC"| bcoinNode
+    xmrAccountService -->|"createAccount / tagAccount"| moneroRPC
+
+    %% Class Definitions for Theme Continuity
+    classDef clientNet stroke:#38bdf8,fill:#0c4a6e,color:#cbd5e1;
+    classDef apiNet stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+    classDef workerNet stroke:#2dd4bf,fill:#115e59,color:#cbd5e1;
+    classDef cacheNet stroke:#a78bfa,fill:#2e1065,color:#cbd5e1;
+    classDef storageNet stroke:#fb923c,fill:#431407,color:#cbd5e1;
+    classDef nodeNet stroke:#f87171,fill:#450a0a,color:#cbd5e1;
+
+    class Clients clientNet;
+    class Queues apiNet;
+    class Processing workerNet;
+    class Cache cacheNet;
+    class DB storageNet;
+    class Chains nodeNet;`;
+---
+<Layout title="Distributed Crypto Exchange API & Swap Engine | Architecture">
+    <h1>Case Study: Distributed Crypto Exchange API & Swap Engine</h1>
+    
+    <ul class="meta-list">
+        <li><strong>Production Framework:</strong> <a href="https://needmonero.com/" target="_blank">needmonero.com</a></li>
+        <li><strong>Source Repository:</strong> <a href="https://github.com/joshjames/cryptoapi" target="_blank">github.com/joshjames/cryptoapi</a></li>
+        <li><strong>Core Design Mechanics:</strong> Event-Driven Microservices, Distributed Saga Transactions, BullMQ Worker Pools, Account-Based Wallet Architectures.</li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid #334155; margin: 2em 0;" />
+
+    <h2>The Engineering Challenge</h2>
+    <p>
+        Building an automated cross-currency swap framework requires handling non-deterministic, public distributed ledgers. The core constraints resolved over a year of rigorous architectural iteration include:
+    </p>
+    <ul>
+        <li><strong>Concurrency Isolation:</strong> Mitigating block-sync and transaction race-conditions by removing traditional database table locks during high-throughput transfer volumes.</li>
+        <li><strong>Infrastructure Decoupling:</strong> Migrating away from a highly fragile "individual wallet-per-user" model to a hardened "Master Wallet with Account-Based Indices" architecture.</li>
+        <li><strong>Network Resilience:</strong> Shielding customer API runtimes from high-latency cryptographic daemon node processing (e.g., <code>bcoin</code> and <code>monero-ts</code> synchronization delays).</li>
+    </ul>
+
+    <h2>Logical Service & Data Dependency Design</h2>
+    <p>
+        The following topology illustrates the asynchronous processing flow of the wallet engine. Transactions are safely isolated into Redis-backed queues before consuming workers execute sequential wallet daemon RPC updates.
+    </p>
+
+    <div class="mermaid" set:html={mermaidGraph}></div>
+
+    <h2>Core Architectural Pillar Deep Dives</h2>
+
+    <h3>1. Hardened Account-Based Order Flows</h3>
+    <p>
+        To preserve scalability, both Bitcoin and Monero runtimes share matching abstract account-based patterns in their master storage nodes. The entire transactional lifecycle is strictly managed via microservice hooks:
+    </p>
+    <ul>
+        <li><strong>Order Generation:</strong> When a buyer initiates an order (e.g., <code>POST /api/bitcoin/order/create</code>), the platform allocates a unique wallet ID mapped directly to an account index inside Redis (such as <code>bitcoin:order:account:map</code>). This acts as a distinct, low-compute flat identifier.</li>
+        <li><strong>Wallet Ownership State Machine:</strong> Real-time balances and ownership contexts transfer sequentially between nodes without physically moving currency on-chain (burning network fees). The ownership mutations are handled asynchronously via state tracking logs:
+            <pre><code>[system] ➔ [order] ➔ [escrow] ➔ [vendor]</code></pre>
+        </li>
+    </ul>
+
+    <h3>2. Asynchronous Processing via BullMQ Worker Nodes</h3>
+    <p>
+        API gateways handle customer inputs instantaneously by delegating high-latency crypto operations out to dedicated, Redis-backed transaction queues.
+    </p>
+    <ul>
+        <li><strong>Monero Transaction Queue:</strong> Handled with a robust exponential backoff strategy (3 attempts, 5000ms delay). Workers consume structured payload payloads, invoking the <code>sendFromUser()</code> utility methods within isolated containers.</li>
+        <li><strong>Cron Scheduled Tasks:</strong> A centralized <code>QueueScheduler</code> maps out recurring background loops, enforcing structural integrity across volatile daemon endpoints:
+            <ul>
+                <li><strong>Every 3 Minutes:</strong> Scans the chain state to check pending transaction confirmations.</li>
+                <li><strong>Every 5 Minutes:</strong> Forces a strict balance-sync cross-check across all Monero subaddresses via the master <code>syncBalances()</code> controller.</li>
+                <li><strong>Every 15 Minutes:</strong> Triggers external exchange aggregators to compute fluid, memory-cached transactional currency conversion values.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3. Low-Latency Redis Schema Structure</h3>
+    <p>
+        The persistence strategy relies heavily on specialized key structures to handle state transformations in sub-millisecond durations:
+    </p>
+    <pre><code># Bitcoin Key Ingress Topology
+bitcoin:order:account:map          # Global Order ID to Account string allocation
+bitcoin:order:account:[orderId]    # Specific order runtime metadata payload
+ownership:history:[walletId]       # Historical distributed ledger proof trail
+
+# Monero Account-Index Topography
+monero:order:account:map           # Order ID mapped to explicit account index numbers
+monero:tag:order                   # Global tracking tag arrays
+monero:tag:order_[orderId]         # Order context tags validated during finalization</code></pre>
+
+    <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script is:inline>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+    </script>
+</Layout>
+
+<style>
+    .meta-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 2em;
+    }
+    .meta-list li {
+        margin-bottom: 0.5em;
+    }
+    pre {
+        background-color: #1e293b;
+        padding: 1em;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        overflow-x: auto;
+    }
+    code {
+        color: #f472b6;
+        font-family: ui-monospace, monospace;
+    }
+</style>

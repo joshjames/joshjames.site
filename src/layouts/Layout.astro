@@ -1,0 +1,181 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+
+// Current year helper
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Josh James - Systems Architecture Portfolio" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		
+		<script is:inline src="https://cdn.tailwindcss.com"></script>
+
+		<style is:global>
+			/* Explicitly inject the core Tailwind compilation engines into the global scope */
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+
+			/* Move baseline theme constraints here to bypass Astro parsing limitations */
+			body {
+				background-color: #0f172a;
+				color: #cbd5e1;
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+				line-height: 1.6;
+			}
+			
+			/* Global typography formatting rules */
+			h1, h2, h3 { color: #34d399; font-weight: 600; margin-top: 2em; }
+			h1 { border-bottom: 1px solid #334155; padding-bottom: 0.3em; }
+			a { color: #38bdf8; text-decoration: none; }
+			code { background-color: #1e293b; padding: 0.2em 0.4em; border-radius: 4px; color: #f472b6; }
+			pre { background-color: #1e293b; padding: 1em; border-radius: 8px; overflow-x: auto; border: 1px solid #334155; }
+			blockquote { border-left: 4px solid #34d399; margin: 1.5em 0; padding-left: 1em; color: #94a3b8; font-style: italic; }
+			ul { padding-left: 1.5em; }
+			li { margin-bottom: 0.5em; }
+
+			/* Seamless scrollbar styling for a dark terminal aesthetic */
+			::-webkit-scrollbar {
+				width: 6px;
+				height: 6px;
+			}
+			::-webkit-scrollbar-track {
+				background: #0f172a;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #334155;
+				border-radius: 3px;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: #34d399;
+			}
+		</style>
+	</head>
+	<body class="selection:bg-[#34d399] selection:text-[#0f172a]">
+		
+		<div class="lg:hidden w-full bg-[#1e293b] border-b border-[#334155] p-4 sticky top-0 z-50 flex justify-between items-center">
+			<a href="/" class="text-[#34d399] font-bold tracking-wider text-sm">JOSH_JAMES // SYS_ARCH</a>
+			<button id="mobile-menu-toggle" class="text-[#cbd5e1] hover:text-[#34d399] focus:outline-none p-1" aria-label="Toggle Menu">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			</button>
+		</div>
+
+		<div class="flex min-h-screen relative">
+
+			
+			<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-[#1e293b] border-r border-[#334155] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between h-screen sticky top-0">
+				
+				<div class="p-6 overflow-y-auto flex-1">
+					<div class="mb-8 hidden lg:block">
+						<a href="/" class="text-[#34d399] font-bold text-lg block tracking-widest">JOSH_JAMES</a>
+						<span class="text-xs text-[#64748b] uppercase tracking-wider block mt-1">Infrastructure & Architecture</span>
+					</div>
+
+					<nav class="space-y-6 text-sm">
+						<div>
+							<h3 class="text-xs uppercase font-bold text-[#64748b] tracking-wider mb-2">Blog & Articles</h3>
+							<ul class="space-y-2 border-l border-[#334155] pl-3 ml-1">
+								<li><a href="/blog/agentic-ai-network" class="hover:text-[#38bdf8] block transition-colors py-0.5">Agentic AI Network</a></li>
+								<li><a href="/blog/foolproof-ai-detection" class="hover:text-[#38bdf8] block transition-colors py-0.5">AI Generation Detection</a></li>
+							</ul>
+						</div>
+
+						<div>
+							<h3 class="text-xs uppercase font-bold text-[#64748b] tracking-wider mb-2">Portfolio</h3>
+							
+							<div class="mb-3">
+								<span class="text-xs text-[#475569] font-semibold block mb-1">↳ Past Projects</span>
+								<ul class="space-y-2 border-l border-[#334155] pl-3 ml-2">
+									<li><a href="/systems-architecture/woolworths-ecom-scalability" class="hover:text-[#38bdf8] block transition-colors py-0.5">Woolworths Ecom</a></li>
+									<li><a href="/systems-architecture/vapefinder-platform-deep-dive" class="hover:text-[#38bdf8] block transition-colors py-0.5">VapeFinder</a></li>
+									<li><a href="/systems-architecture/skyramp-global-vpn" class="hover:text-[#38bdf8] block transition-colors py-0.5">Skyramp Global VPN Platform</a></li>
+									<li><a href="/systems-architecture/secure-trade-commerce-system-with-ddos-protection" class="hover:text-[#38bdf8] block transition-colors py-0.5">Secure Ecommerce Platform</a></li>
+								</ul>
+							</div>
+
+							<div>
+								<span class="text-xs text-[#475569] font-semibold block mb-1">↳ Current Projects</span>
+								<ul class="space-y-2 border-l border-[#334155] pl-3 ml-2">
+									<li><a href="/systems-architecture/axiom" class="hover:text-[#38bdf8] block transition-colors py-0.5">Axiom</a></li>
+									<li><a href="/systems-architecture/monero-swap-engine" class="hover:text-[#38bdf8] block transition-colors py-0.5">Needmonero (Swap Engine)</a></li>
+									<li><a href="/systems-architecture/autoplatform" class="hover:text-[#38bdf8] block transition-colors py-0.5">AutoPlatform</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="space-y-2 font-semibold pt-2 border-t border-[#334155]">
+							<a href="/cv" class="hover:text-[#34d399] block transition-colors py-1">/ CV</a>
+							<a href="/contact" class="hover:text-[#34d399] block transition-colors py-1">/ Contact</a>
+						</div>
+					</nav>
+				</div>
+
+				<div class="p-6 border-t border-[#334155] bg-[#131d31] text-[10px] text-[#64748b]">
+					<span>© {currentYear} Josh James</span>
+				</div>
+			</aside>
+
+			<div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
+
+
+			<main class="flex-1 w-full px-4 py-6 md:px-8 lg:py-12 lg:pl-72 lg:pr-12 overflow-x-hidden">
+    		<slot />
+			</main>
+
+
+
+		</div>
+
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', () => {
+				const toggleBtn = document.getElementById('mobile-menu-toggle');
+				const sidebar = document.getElementById('sidebar');
+				const overlay = document.getElementById('sidebar-overlay');
+
+				function toggleMenu() {
+					sidebar.classList.toggle('-translate-x-full');
+					overlay.classList.toggle('hidden');
+				}
+
+				toggleBtn?.addEventListener('click', toggleMenu);
+				overlay?.addEventListener('click', toggleMenu);
+			});
+
+
+		// Vanilla Lightbox Engine for Architecture Diagrams
+					document.addEventListener('DOMContentLoaded', () => {
+						const images = document.querySelectorAll('main img');
+						images.forEach(img => {
+							img.style.cursor = 'zoom-in';
+							img.addEventListener('click', () => {
+								const overlay = document.createElement('div');
+								overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-zoom-out';
+								
+								const zoomImg = document.createElement('img');
+								zoomImg.src = img.src;
+								zoomImg.className = 'max-w-full max-h-full object-contain border border-[#334155] rounded';
+								
+								overlay.appendChild(zoomImg);
+								document.body.appendChild(overlay);
+								
+								overlay.addEventListener('click', () => overlay.remove());
+							});
+						});
+					});
+
+
+		</script>
+	</body>
+</html>

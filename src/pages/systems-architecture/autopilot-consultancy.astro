@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="AutoPilot Consultancy | Architecture">
+    <h1>AutoPilot Solutions: Selected Architectural Index</h1>
+    <blockquote>
+        From 2017 to 2019, AutoPilot operated as an agile boutique technology consultancy delivering distributed frameworks, advanced automation, and complex cloud migrations.
+    </blockquote>
+    <hr style="border: 0; border-top: 1px solid #334155; margin: 2em 0;" />
+    <h2>01. SkyRamp VPN / Getflix</h2>
+    <ul>
+        <li><strong>Objective:</strong> Architect and deploy a highly cost-optimized, low-margin global consumer VPN network with custom geolocation routing metrics.</li>
+        <li><strong>Design & Topology:</strong>
+            <ul>
+                <li>Constructed an AWS multi-region infrastructure backed by custom CloudWatch alarms triggering performance-based Auto-Scaling events.</li>
+                <li>Optimized raw network throughput via deliberate <strong>Packet Steering</strong> protocols on EC2 instances—binding distinct CPU cores entirely to independent RX/TX transport streams to maximize connection density.</li>
+            </ul>
+        </li>
+        <li><strong>Stack:</strong> AWS, HAProxy, OpenVPN Core, Route 53 (dynamic DNS via cli53), Python, Node.js.</li>
+    </ul>
+    <h2>02. Woolworths Online — Fulfillment Re-Architecting</h2>
+    <ul>
+        <li><strong>Objective:</strong> Remediate and harden a fragile corporate cloud transition for a multi-million dollar nationwide online logistics vehicle.</li>
+        <li><strong>Interventions:</strong>
+            <ul>
+                <li>Re-engineered legacy monolithic components into a resilient service-bus-driven platform.</li>
+                <li>Introduced standalone Elasticsearch clusters to aggressively decouple heavy core database I/O workloads.</li>
+                <li>Transformed manual release environments into automated, immutable, continuous deployment validation loops.</li>
+            </ul>
+        </li>
+        <li><strong>Stack:</strong> Azure Service Bus, .NET Core, Docker (Mono-containers), Elasticsearch.</li>
+    </ul>
+    <h2>03. QLD Health & Aged Care Gateways</h2>
+    <ul>
+        <li><strong>Government Cloud Migration Portal:</strong> Developed an internal server migration gateway leveraging infrastructure platform APIs to map, snapshot, and cleanly lift legacy physical data center profiles into structured public clouds.</li>
+        <li><strong>Aged Care Gateway Engine:</strong> Successfully delivered a highly secure matching portal incorporating the federal AUSkey digital credential system. Awarded <em>Innovator of the Year</em> for operational execution alongside Sundale.</li>
+        <li><strong>Stack:</strong> AWS API, Azure API, VMware vRealize (VCO), Node.js, Secure Government Portals.</li>
+    </ul>
+</Layout>

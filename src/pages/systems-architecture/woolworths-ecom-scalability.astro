@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Woolworths E-Commerce Scale Re-Architecture | Josh James">
+	<div class="border-b border-[#334155] pb-4 mb-6">
+		<h1>/sys/portfolio/woolworths-ecom-scalability</h1>
+		<p class="text-xs text-[#64748b] font-mono mt-1">CASE STUDY: HIGH-VOLUME E-COMMERCE DECOUPLING & PLATFORM REMEDIATION</p>
+	</div>
+
+	<div class="space-y-8 font-sans text-sm text-[#cbd5e1] leading-relaxed">
+		
+		<div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs">
+			<div><span class="text-[#64748b] block">CLIENT:</span> Woolworths Digital</div>
+			<div><span class="text-[#64748b] block">ROLE:</span> Lead Dev & Infrastructure Architect</div>
+			<div><span class="text-[#64748b] block">TARGET:</span> Azure Cloud Environment</div>
+			<div><span class="text-[#64748b] block">ENGINE:</span> .NET Core / Mono / Angular JS</div>
+		</div>
+
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// The Engineering Challenge</h3>
+			<p>
+				Brought on to remediate a high-volume enterprise e-commerce system struggling under the weight of a standard "lift-and-shift" cloud migration. The legacy application stack suffered from severe structural incompatibilities within the cloud target environment. High concurrency during peak traffic hours resulted in immense database I/O bottlenecks, sluggish catalog lookup times, and fragile release mechanics that locked down engineering velocity.
+			</p>
+		</section>
+
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Core Architectural Interventions</h3>
+			<ul class="space-y-2 list-none pl-0 font-mono text-xs">
+				<li>
+					<strong class="text-[#38bdf8]">1. Database Offloading & Discovery:</strong> 
+					Injected an independent Elasticsearch cluster backed by a custom Nest Client wrapper. This shifted high-frequency read traffic and catalog searches entirely away from the core transactional relational databases, dropping database I/O by orders of magnitude.
+				</li>
+				<li>
+					<strong class="text-[#38bdf8]">2. Containerized Application Isolation:</strong> 
+					Transitioned legacy application runtimes into containerized instances leveraging Mono open-source components. This allowed highly predictable environment isolation and scaling profiles across Microsoft Server and hybrid infrastructure.
+				</li>
+				<li>
+					<strong class="text-[#38bdf8]">3. Declarative Environment Promotion:</strong> 
+					Architected a complete CI/CD automation pipeline that enabled continuous integration and structured environment promotion. This allowed the engineering team to deploy verified infrastructure states deterministically straight to Azure.
+				</li>
+			</ul>
+		</section>
+
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Re-Architected Architecture Topology</h3>
+			<p class="text-xs text-[#64748b]">High-level representation of asynchronous fulfillment routing and offloaded storage layout:</p>
+			
+			<div class="bg-[#1e293b] p-4 rounded border border-[#334155] overflow-x-auto">
+				<pre class="mermaid bg-transparent p-0 border-0">
+{`graph TD
+	LB[Load Balancer]
+	TraderWeb[Trader Web App]
+	ESCluster[Elasticsearch Cluster]
+	TraderDB[Trader SQL DB]
+	EcfDB[ECF SQL DB]
+	MsgQueue[Message Queue / Service Bus]
+	RoutePlanner[Route Planner Engine]
+
+	LB --> TraderWeb
+	TraderWeb --> ESCluster
+	TraderWeb --> TraderDB
+	TraderWeb --> MsgQueue
+	MsgQueue --> EcfDB
+	EcfDB --- RoutePlanner
+	RoutePlanner --> TraderWeb
+
+	classDef infra fill:#1e293b,stroke:#334155,stroke-width:1px,color:#cbd5e1;
+	classDef data fill:#0f172a,stroke:#34d399,stroke-width:1px,color:#34d399;
+	classDef app fill:#131d31,stroke:#38bdf8,stroke-width:1px,color:#38bdf8;
+
+	class LB,MsgQueue infra;
+	class ESCluster,TraderDB,EcfDB data;
+	class TraderWeb,RoutePlanner app;`}
+				</pre>
+			</div>
+
+		</section>
+
+		<section class="space-y-3 font-mono">
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold">// Tech Stack & Execution Framework</h3>
+			<div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs bg-[#1e293b]/50 p-4 rounded border border-[#334155]">
+				<div>• Cloud Target: Azure</div>
+				<div>• Run-time: .NET / .NET Core</div>
+				<div>• Interface: Angular JS</div>
+				<div>• Engines: Mono Containers</div>
+				<div>• Pipeline: Team Services</div>
+				<div>• Search Core: Elasticsearch</div>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		mermaid.initialize({
+			theme: 'dark',
+			startOnLoad: true,
+			securityLevel: 'loose',
+			themeVariables: {
+				background: '#1e293b',
+				primaryColor: '#131d31',
+				primaryTextColor: '#38bdf8',
+				lineColor: '#334155',
+				fontSize: '12px',
+				fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
+			}
+		});
+	});
+</script>

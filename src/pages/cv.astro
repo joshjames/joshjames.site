@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Curriculum Vitae | Josh James">
+	<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-[#334155] pb-4 mb-6">
+		<div>
+			<h1>cat /var/log/professional_history.log</h1>
+		</div>
+		<!-- Hard Copy Asset Export Handles -->
+		<div class="mt-4 sm:mt-0 flex space-x-3 font-mono text-xs">
+			<a href="/files/josh.james.cv.pdf" download class="px-3 py-1.5 bg-[#1e293b] border border-[#334155] rounded text-[#38bdf8] hover:border-[#38bdf8] transition-colors">
+				[PDF Export]
+			</a>
+			<a href="/files/josh.james.cv.docx" download class="px-3 py-1.5 bg-[#1e293b] border border-[#334155] rounded text-[#64748b] hover:border-[#cbd5e1] transition-colors">
+				[DOCX Copy]
+			</a>
+		</div>
+	</div>
+
+	<!-- Core Architectural Profile -->
+	<div class="space-y-8 font-mono text-sm">
+
+		<!-- ARCHITECT MANIFESTO / EXECUTIVE SUMMARY -->
+		<section>
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold mb-3">00. System Philosophy & Abstraction Depth</h3>
+			<div class="bg-[#1e293b] border border-[#334155] p-5 rounded font-sans text-sm text-[#cbd5e1] leading-relaxed space-y-4">
+				<p>
+					Modern infrastructure engineering is plagued by <span class="text-[#f472b6] font-mono">leaky abstractions</span>. Writing high-level Infrastructure as Code (IaC) without understanding the physical layer is like trying to tune a high-performance engine without knowing how internal combustion works. The best racecar drivers are intimately familiar with mechanical engineering; similarly, true platform orchestration requires an absolute perspective that spans from cloud-native software frameworks down to the bare metal.
+				</p>
+				<p>
+					My expertise blends modern software methodologies with a core-principle mastery of every layer of the technology stack. Having physically worked inside data centers, mounted bare metal, carved out SAN/NAS storage planes, and routed IP packets through physical switches as the industry evolved, I don't just consume API wrappers—I understand the structural constraints beneath them. 
+				</p>
+				<p>
+					Whether configuring memory allocations, optimizing hypervisor layouts, or debugging complex state synchronization sagas across distributed systems, this holistic perspective allows me to build architectures that are deterministic, deeply secure, and structurally immune to unexpected infrastructural friction.
+				</p>
+			</div>
+		</section>
+		
+		<!-- 01. SYSTEMS & TOOLING MATRIX -->
+		<section>
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold mb-3">01. Core Systems & Tooling Matrix</h3>
+			<pre class="bg-[#1e293b] p-4 rounded text-[#cbd5e1] border border-[#334155] leading-relaxed text-xs overflow-x-auto">
+[CLOUD PLATFORMS]     AWS // Azure // GCP // OpenStack // Hybrid Bare-Metal
+[INFRASTRUCTURE/IaC]   Terraform // Bicep // CloudFormation // Puppet // Ansible
+[CONTAINERIZATION]     Kubernetes (EKS, AKS, GKE) // Docker // Helm
+[AUTOMATION / CI-CD]   GitHub Actions // GitLab CI // Jenkins // AWS CodePipeline
+[SCRIPTING CHANNELS]   Python // Bash // PowerShell // Node.js
+[SYSTEMS / HYPERVISOR] Linux (RHEL, Ubuntu) // Windows Server // VMware vSphere
+[NETWORKING & SEC]     Zero-Trust Architecture // IAM // VPC Topology // API Isolation
+[DATA & AUTOMATION]    AI/ML Data Pipelines // Vector DBs // RAG Systems // HPC Scheduling</pre>
+		</section>
+
+		<!-- 02. COMPLIANCE & GOVERNANCE PHASES -->
+		<section>
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold mb-3">02. Regulated Environments & Governance</h3>
+			<div class="bg-[#1e293b]/50 border border-[#334155] rounded p-4 font-sans text-xs text-[#cbd5e1] space-y-2 leading-relaxed">
+				<p>• <strong class="text-[#34d399] font-mono">APRA Frameworks:</strong> Engineered and supported highly compliant financial systems for tier-1 banking and insurance environments (NAB, RACQ Bank, ANZ).</p>
+				<p>• <strong class="text-[#34d399] font-mono">SOC2 & Operational Audits:</strong> Implemented immutable change-management controls, encrypted storage planes, and audit logging layers across secure FinTech systems (Liven, Suncorp, Auto & General).</p>
+				<p>• <strong class="text-[#34d399] font-mono">Government Frameworks:</strong> Aligned enterprise municipal infrastructure with strict ITIL, ISO/IEC 27001, and HIPAA compliance policies (QLD Health, TMR, Department of Housing).</p>
+			</div>
+		</section>
+
+		<!-- 03. CHRONOLOGICAL EXECUTION PIPELINE -->
+		<section class="space-y-6">
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold">// 03. Chronological Execution Pipeline</h3>
+			
+			<div class="border-l-2 border-[#334155] pl-4 ml-2 space-y-8">
+				
+				<!-- CONTRACT: DEPT COMMUNITIES & HOUSING -->
+				<div>
+					<div class="flex flex-col sm:flex-row sm:justify-between text-xs text-[#64748b] mb-1">
+						<span class="font-bold text-[#38bdf8]">SENIOR DEVOPS ENGINEER (CONTRACT)</span>
+						<span>NOV 2024 — AUG 2025</span>
+					</div>
+					<h4 class="text-[#cbd5e1] font-semibold text-base">Department of Communities and Housing</h4>
+					<p class="text-xs text-[#94a3b8] mt-1 font-sans leading-relaxed">
+						Managed and optimized AWS-hosted Kubernetes (EKS) infrastructure. Engineered automated lifecycle patching tracks, blue-green deployment matrices, and strict isolation models for Node.js microservice architectures interacting with financial endpoints.
+					</p>
+					<div class="text-[11px] text-[#34d399] mt-2 font-mono">
+						STK_ENG: AWS (EKS, CDK, Terraform), Kubernetes, Helm, CodePipeline, Docker, Node.js
+					</div>
+				</div>
+
+				<!-- POSITION: AUTO & GENERAL -->
+				<div>
+					<div class="flex flex-col sm:flex-row sm:justify-between text-xs text-[#64748b] mb-1">
+						<span class="font-bold text-[#38bdf8]">SENIOR PLATFORM ENGINEER</span>
+						<span>NOV 2023 — NOV 2024</span>
+					</div>
+					<h4 class="text-[#cbd5e1] font-semibold text-base">Auto & General</h4>
+					<p class="text-xs text-[#94a3b8] mt-1 font-sans leading-relaxed">
+						Delivered production-hardened Terraform modules providing foundational multi-cloud architecture. Collaborated with data engineering units to build out GPU-enabled bare-metal/container clusters for AI/ML and RAG validation in a highly audited SOC2 insurance landscape.
+					</p>
+					<div class="text-[11px] text-[#34d399] mt-2 font-mono">
+						STK_ENG: Terraform, Puppet, AWS (EKS/ECS), Azure (AKS), GCP (GKE), Jenkins, IAM Systems
+					</div>
+				</div>
+
+				<!-- CONTRACT: TMR QLD -->
+				<div>
+					<div class="flex flex-col sm:flex-row sm:justify-between text-xs text-[#64748b] mb-1">
+						<span class="font-bold text-[#38bdf8]">SENIOR CLOUD SPECIALIST (CONTRACT)</span>
+						<span>JAN 2023 — NOV 2023</span>
+					</div>
+					<h4 class="text-[#cbd5e1] font-semibold text-base">Department of Transport & Main Roads QLD</h4>
+					<p class="text-xs text-[#94a3b8] mt-1 font-sans leading-relaxed">
+						Architected enterprise-grade Azure Landing Zones via reusable declarative Terraform configurations. Integrated complex hybrid networking models spanning ExpressRoute links and secure cross-cloud Direct Connect bridges.
+					</p>
+					<div class="text-[11px] text-[#34d399] mt-2 font-mono">
+						STK_ENG: Azure, Terraform, Azure AD / Entra, Azure DevOps, CloudFormation, Routing Primitives
+					</div>
+				</div>
+
+				<!-- POSITION: AC3 -->
+				<div>
+					<div class="flex flex-col sm:flex-row sm:justify-between text-xs text-[#64748b] mb-1">
+						<span class="font-bold text-[#cbd5e1]">CLOUD OPERATIONS ENGINEER</span>
+						<span>2022 — 2023</span>
+					</div>
+					<h4 class="text-[#cbd5e1] font-semibold text-base">AC3</h4>
+					<p class="text-xs text-[#94a3b8] mt-1 font-sans leading-relaxed">
+						Provided multi-tenant engineering automation for public sector and enterprise accounts. Unified bare-metal infrastructure orchestration (VMware) with hybrid public cloud topologies using declarative CI pipelines.
+					</p>
+					<div class="text-[11px] text-[#34d399] mt-2 font-mono">
+						STK_ENG: Azure, VMware, Jenkins, GitLab CI, AWS (ECS, RDS, Route53), Active Directory
+					</div>
+				</div>
+
+				<!-- POSITION: LIVEN -->
+				<div>
+					<div class="flex flex-col sm:flex-row sm:justify-between text-xs text-[#64748b] mb-1">
+						<span class="font-bold text-[#cbd5e1]">SENIOR SITE RELIABILITY ENGINEER</span>
+						<span>2020 — 2022</span>
+					</div>
+					<h4 class="text-[#cbd5e1] font-semibold text-base">Liven</h4>
+					<p class="text-xs text-[#94a3b8] mt-1 font-sans leading-relaxed">
+						Led scaling and infrastructure expansion routines. Engineered a multi-region global cluster network with geo-proximity routing, high-performance cache configurations, and zero-downtime ledger synchronization pipelines.
+					</p>
+					<div class="text-[11px] text-[#34d399] mt-2 font-mono">
+						STK_ENG: AWS, GCP, ECS, Redis, Terraform, Ansible, Elasticsearch, Database Replication Sagas
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- 04. HISTORICAL HISTOGRAM ARCHIVE -->
+		<section>
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold mb-3">04. Historical Histogram Archive (2004 — 2020)</h3>
+			<div class="bg-[#1e293b] p-4 rounded text-[#cbd5e1] border border-[#334155] font-mono text-xs space-y-2 leading-relaxed">
+				<p><span class="text-[#64748b]">2019 — 2020:</span> <strong class="text-[#38bdf8]">Rackspace</strong> | Cloud Automation Engineer (SaaS Transitions & Ansible Infrastructure)</p>
+				<p><span class="text-[#64748b]">2019 — 2020:</span> <strong class="text-[#38bdf8]">ARQ Group</strong> | Senior DevOps Engineer (AWS Computer Vision Infrastructure for ANZ / Dominos)</p>
+				<p><span class="text-[#64748b]">2019 — 2019:</span> <strong class="text-[#cbd5e1]">NAB</strong> | Cloud Infrastructure Consultant (Red Hat Enterprise Migration Layer, 35k+ Node Scale)</p>
+				<p><span class="text-[#64748b]">2018 — 2018:</span> <strong class="text-[#cbd5e1]">RACQ Bank</strong> | Cloud Resiliency Consultant (APRA Pipeline Remediation)</p>
+				<p><span class="text-[#64748b]">2015 — 2018:</span> <strong class="text-[#94a3b8]">Versent / CMD / Woolworths / QLD Health</strong> | Enterprise Cloud Migration Architectures</p>
+				<p><span class="text-[#64748b]">2011 — 2015:</span> <strong class="text-[#34d399]">Lindsay Australia</strong> | Network Engineer & Head of Infrastructure (Data Center & Routing Foundations)</p>
+				<p><span class="text-[#64748b]">2008 — 2011:</span> <strong class="text-[#34d399]">Sundale</strong> | Senior Systems Administrator</p>
+				<p><span class="text-[#64748b]">2004 — 2008:</span> <strong class="text-[#34d399]">QPAC</strong> | Systems & Wintel Administrator</p>
+			</div>
+		</section>
+
+		<!-- 05. ACADEMIC & EDUCATION LOGS -->
+		<section>
+			<h3 class="text-[#34d399] text-xs uppercase tracking-widest font-bold mb-2">05. Academic Logs & Credentials</h3>
+			<ul class="text-xs space-y-1 font-mono text-[#cbd5e1] list-none pl-0">
+				<li>• <strong class="text-[#94a3b8]">Murdoch University:</strong> Applied Science (Mechanical & Electronic Engineering)</li>
+				<li>• <strong class="text-[#94a3b8]">NSW Institute of TAFE:</strong> Diploma Systems Administration (Distinction), Cert IV Network Management</li>
+				<li>• <strong class="text-[#34d399]">Industry Badges:</strong> AWS Certified DevOps Engineer Professional // Cisco Routing & Switching // VMware vSphere 4/5 // Red Hat RHCE</li>
+			</ul>
+		</section>
+	</div>
+</Layout>

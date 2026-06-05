@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const mermaidGraph = `graph TB
+    subgraph Client["📱 Client Tier (Mobile-First Web)"]
+        ui["Next.js App Router UI"]
+        gmaps["Google Maps API Integration"]
+        geo["HTML5 Geolocation API"]
+    end
+
+    subgraph API["⚡ API Gateway & Route Handlers"]
+        routeAuth["/api/auth/* (Session Management)"]
+        routeSup["/api/suppliers/* (CRUD / Geo-Query)"]
+        routeProd["/api/products/* (Catalog Management)"]
+        routeMsg["/api/messages/* (Real-time Routing)"]
+        routeLead["/api/contacts/* (Lead Tracking Engine)"]
+    end
+
+    subgraph CoreServices["⚙️ Platform Service Layer"]
+        authService["Auth Utility Engine<br/>JWT & Session Guard"]
+        mapService["Maps Optimization Service<br/>Fuzzy Radius Generator"]
+        msgService["Multi-Channel Broker<br/>WhatsApp / Telegram / App Switch"]
+        leadService["Monetization & Lead Counter"]
+    end
+
+    subgraph Models["📦 Data Access Layer (Entities)"]
+        userModel["User Model<br/>(ID, Email, PasswordHash, Role)"]
+        supplierModel["Supplier Model<br/>(ID, Name, GeoPoint, FuzzyRadius, Active)"]
+        productModel["Product Model<br/>(ID, SupplierID, Name, SKU, InStock)"]
+        messageModel["Message Model<br/>(ID, SenderID, ReceiverID, Content, Timestamp)"]
+        leadModel["Lead/Contact Model<br/>(ID, SupplierID, CustomerFingerprint, Meta)"]
+    end
+
+    subgraph Storage["💾 Persistence Layer"]
+        db[("PostgreSQL Database<br/>(Structured Relations)")]
+    end
+
+    %% Client Interactions
+    ui --> geo
+    ui --> gmaps
+    ui -->|"JSON HTTPS / App Router"| API
+
+    %% Route to Service Mapping
+    routeAuth --> authService
+    routeSup --> mapService
+    routeProd --> CoreServices
+    routeMsg --> msgService
+    routeLead --> leadService
+
+    %% Service to Model Mapping
+    authService --> userModel
+    mapService --> supplierModel
+    msgService --> messageModel
+    leadService --> leadModel
+    CoreServices --> productModel
+
+    %% Database Persist
+    userModel --> db
+    supplierModel --> db
+    productModel --> db
+    messageModel --> db
+    leadModel --> db
+
+    %% Custom Styling Match
+    classDef clientNet stroke:#38bdf8,fill:#0c4a6e,color:#cbd5e1;
+    classDef apiNet stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+    classDef serviceNet stroke:#2dd4bf,fill:#115e59,color:#cbd5e1;
+    classDef modelNet stroke:#a78bfa,fill:#2e1065,color:#cbd5e1;
+    classDef storageNet stroke:#fb923c,fill:#431407,color:#cbd5e1;
+
+    class Client clientNet;
+    class API apiNet;
+    class CoreServices serviceNet;
+    class Models modelNet;
+    class Storage storageNet;`;
+---
+<Layout title="VapeFinder Platform Deep Dive | Architecture">
+    <h1>Case Study: VapeFinder.com.au — Supplier Discovery Platform</h1>
+    <li><strong>Source Repository:</strong> <a href="https://github.com/joshjames/vapefinder">github.com/joshjames/vapefinder</a></li>
+    
+    <blockquote style="border-left: 4px solid #f87171; background-color: #2d1616; padding: 1em; border-radius: 4px; margin: 1.5em 0; color: #fca5a5; font-style: normal;">
+        <strong>⚠️ REGULATORY POST-MORTEM NOTE:</strong><br />
+        Following its engineering lifecycle, the VapeFinder platform was formally decommissioned and closed down due to sweeping legislative updates and federal regulatory structural changes governing the sale and commercial distribution of alternative nicotine delivery systems within Australia. This archive serves strictly as a technical layout showcase of mobile-first discovery patterns, fuzzy location routing, and Next.js App Router service separation.
+    </blockquote>
+
+    <blockquote>
+        <strong>System Overview:</strong> VapeFinder was engineered as a high-performance, mobile-first marketplace locator designed to securely and efficiently bridge the gap between consumers and local wholesale/retail suppliers throughout Australia using low-compute spatial clustering.
+    </blockquote>
+
+    <hr style="border: 0; border-top: 1px solid #334155; margin: 2em 0;" />
+
+    <h2>Platform Layer & Service Dependency Architecture</h2>
+    <p>
+        The system relies on a clean decoupling of Next.js Route Handlers (API Layer) and abstract, state-free logic controllers (Service Layer). Database interactions pass explicitly through strict TypeScript data schemas.
+    </p>
+
+    <div class="mermaid" set:html={mermaidGraph}></div>
+
+    <h2>Technical Breakdown & Specifications</h2>
+    
+    <h3>1. Privacy-First Location Obfuscation</h3>
+    <ul>
+        <li>Instead of streaming absolute vector coordinates (Latitude/Longitude) of suppliers to client devices, the <code>Maps Optimization Service</code> automatically calculates a moving fuzzy perimeter (~500m to 1km radius offset).</li>
+        <li>This allows accurate localized consumer map rendering via the Google Maps API while entirely mitigating the scrapability of a supplier's precise operations footprint.</li>
+    </ul>
+
+    <h3>2. Asynchronous Multi-Channel Brokerage</h3>
+    <ul>
+        <li>The messaging system routes inquiries either internally using stateful tables or externally via protocol hooks (Deep linking seamlessly into Telegram and WhatsApp instances).</li>
+        <li>Every intent-to-contact event transitions through a tracking abstraction layer, allowing real-time recording of transactional lead metrics to validate monetization velocity without disrupting customer conversion funnels.</li>
+    </ul>
+
+    <h3>3. Clean Directory Allocation</h3>
+    <pre><code>vapefinder/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── (marketing)/        # Public marketing funnels
+│   │   ├── (auth)/             # NextAuth / Crypto Token Guards
+│   │   ├── (customer)/         # Geolocation & Mapping Views
+│   │   └── (supplier)/         # Inventory & Product Matrix Management
+│   ├── components/             # Atomic UI Elements
+│   └── lib/                    # Core Infrastructure Engines (db, maps)</code></pre>
+
+    <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script is:inline>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true }
+        });
+    </script>
+</Layout>

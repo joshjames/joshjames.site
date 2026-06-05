@@ -1,0 +1,153 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="SkyRamp / CWE High-Throughput Global VPN Architecture | Josh James">
+	<div class="border-b border-[#334155] pb-4 mb-6">
+		<h1>/sys/portfolio/skyramp-global-vpn</h1>
+		<p class="text-xs text-[#64748b] font-mono mt-1">CASE STUDY: HARDENED BARE-METAL OPTIMIZATION & MULTI-REGION PACKET STEERING</p>
+	</div>
+
+	<div class="space-y-8 font-sans text-sm text-[#cbd5e1] leading-relaxed">
+		
+		<!-- METADATA BLOCK -->
+		<div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs">
+			<div><span class="text-[#64748b] block">CLIENT:</span> Complete Web Experience (CWE)</div>
+			<div><span class="text-[#64748b] block">ROLE:</span> Principal Infrastructure Architect</div>
+			<div><span class="text-[#64748b] block">INFRASTRUCTURE:</span> AWS Distributed Regions[cite: 1, 2]</div>
+			<div><span class="text-[#64748b] block">CORE NETWORKING:</span> Custom-Compiled OpenVPN / HAProxy[cite: 1, 2]</div>
+		</div>
+
+		<!-- THE CHALLENGE -->
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// The Commercial & Performance Constraint</h3>
+			<p>
+				Tasked with building a consumer-facing, highly scalable global VPN and geo-blocking avoidance network for a startup digital media company[cite: 1, 2]. Operating in a cut-throat commodity market meant profit margins were thin[cite: 1]—the entire architecture had to be "designed for cost" without sacrificing packet processing fidelity[cite: 1, 2]. In high-volume network routing, typical out-of-the-box cloud software configurations drop frames and suffer severe context-switching overhead long before utilizing raw hardware capabilities[cite: 2]. The mission was to extract every last hertz of performance from minimal hardware footprints[cite: 2].
+			</p>
+		</section>
+
+		<!-- DOWN TO THE ELECTRONS: THE TUNING MATRICES -->
+		<section class="space-y-4">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Low-Level Optimization Mechanics</h3>
+			<p>
+				To break past standard network encapsulation penalties and leaky system wrappers, the stack was customized directly over the virtual bare metal[cite: 1]:
+			</p>
+			
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div class="bg-[#1e293b]/60 p-4 rounded border border-[#334155] space-y-2">
+					<h4 class="text-[#38bdf8] font-mono text-xs uppercase tracking-wider font-bold">1. Core-Pinning & Asynchronous Daemons</h4>
+					<p class="text-xs text-[#94a3b8]">
+						Instead of allowing the OS scheduler to shift network execution across different CPUs (causing devastating L1/L2 cache invalidations), independent OpenVPN processes were explicitly bound to dedicated, pinned processor cores[cite: 2]. This allowed each worker core to stay hot and cleanly scale connection pools deterministically[cite: 1, 2].
+					</p>
+				</div>
+				<div class="bg-[#1e293b]/60 p-4 rounded border border-[#334155] space-y-2">
+					<h4 class="text-[#38bdf8] font-mono text-xs uppercase tracking-wider font-bold">2. Symmetric RPS / Packet Steering</h4>
+					<p class="text-xs text-[#94a3b8]">
+						Configured the AMI kernel layer to leverage Receive Packet Steering (RPS) alongside multiple Elastic Network Interfaces (ENIs) per machine[cite: 1, 2]. Network IRQ lines were hard-allocated across the hardware layout: assigning an entire core exclusively for incoming RX line handling and another for outbound TX queues[cite: 2].
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- MERMAID GLOBAL PACKET ROUTING TOPOLOGY -->
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Multi-Region Edge Infrastructure</h3>
+			<p class="text-xs text-[#64748b]">Visualizing the auto-scaled OpenVPN tier integrated with geo-proximity routing proxies[cite: 1, 2]:</p>
+			
+			<div class="bg-[#1e293b] p-4 rounded border border-[#334155] overflow-x-auto">
+				<pre class="mermaid bg-transparent p-0 border-0">
+{`graph TD
+	Users[Global Consumer Base]
+	Route53[Route 53 Dynamic DNS Engine]
+	HAProxy[Remote Region HAProxy Redirection]
+
+	subgraph VPC_AutoScaling_Zone ["AWS High Availability Cluster Core"]
+		EniRX[Multi-ENI Physical Interface RX Array]
+		EniTX[Multi-ENI Physical Interface TX Array]
+
+		subgraph C3_2xLarge_Hardware ["Custom Linux Kernel Engine"]
+			CPU0[CPU Core 0: Assigned to RX Traffic]
+			CPU1[CPU Core 1: Assigned to TX Traffic]
+			CPU2[CPU Core 2: Pinned OpenVPN Instance]
+			CPU3[CPU Core 3: Pinned OpenVPN Instance]
+		end
+
+		S3Boot[Immutable Configuration S3 Bucket]
+		CloudWatch[Active Session Metrics Engine]
+	end
+
+	Users --> Route53
+	Route53 --> HAProxy
+	HAProxy --> EniRX
+
+	EniRX --> CPU0
+	CPU0 -.-> CPU2
+	CPU0 -.-> CPU3
+
+	CPU2 --> CPU1
+	CPU3 --> CPU1
+	CPU1 --> EniTX
+	EniTX --> Internet[Global Web Plane]
+
+	S3Boot --> C3_2xLarge_Hardware
+	C3_2xLarge_Hardware --> CloudWatch
+
+	classDef edgeNode fill:#1e293b,stroke:#334155,stroke-width:1px,color:#cbd5e1;
+	classDef coreNet fill:#131d31,stroke:#38bdf8,stroke-width:1px,color:#38bdf8;
+	classDef hwLayer fill:#0f172a,stroke:#f472b6,stroke-width:1px,color:#f472b6;
+
+	class Users,Route53,S3Boot,CloudWatch edgeNode;
+	class HAProxy,CPU2,CPU3 coreNet;
+	class EniRX,EniTX,CPU0,CPU1 hwLayer;`}
+				</pre>
+			</div>
+
+		</section>
+
+		<!-- BOOTSTRAP DECLARATIVE BLOCK -->
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Immutable Machine Initialization (Cloud-Init Lifecycle)</h3>
+			<p class="text-xs text-[#94a3b8]">
+				To enforce radical, reproducible node architecture, state compilation parameters were pulled down programmatically from cold storage on system boot to instantly provision local parameters[cite: 2]:
+			</p>
+			<pre class="bg-[#1e293b] p-4 rounded text-[#cbd5e1] border border-[#334155] leading-relaxed text-xs overflow-x-auto font-mono">
+# Core Engine Instantiation Log Entry
+sudo wget -qO- s3://cwe-vpn-core.bootbucket/github-rsa-key > /root/.ssh/id_rsa[cite: 2]
+pip install awscli --quiet && gem install librarian-puppet --quiet[cite: 2]
+
+# Dynamic Route Mapping Execution Entry
+aws ec2 describe-instances --instance-ids $instance_id --output text --query 'Reservations[0].Instances[0].PublicDnsName'[cite: 2]
+cli53 recreate replace cwevpn.com "site 30 A $PublicDnsName"[cite: 2]</pre>
+		</section>
+
+		<!-- METRICS & VALIDATION RESULTS -->
+		<section class="space-y-3">
+			<h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Empirical Scale Outcomes</h3>
+			<div class="bg-[#1e293b]/40 border border-[#334155] rounded p-4 font-mono text-xs text-[#cbd5e1] space-y-2">
+				<p>• <strong class="text-[#34d399]">Machine Utility Vector:</strong> Reached 100-150 concurrent client connections per single hardware CPU execution thread comfortably before throttling[cite: 2].</p>
+				<p>• <strong class="text-[#34d399]">Throughput Efficiency:</strong> Scaling parameters shifted outwards dynamically rather than upwards, tracking concurrent session loads perfectly[cite: 2].</p>
+				<p>• <strong class="text-[#34d399]">Edge Redirection:</strong> Proxy caching targets successfully handled 1,600 synchronous connection requests per second on economical edge clusters without performance degradation[cite: 2].</p>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<!-- Inject Mermaid Dynamic Rendering Script -->
+<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		mermaid.initialize({
+			theme: 'dark',
+			startOnLoad: true,
+			securityLevel: 'loose',
+			themeVariables: {
+				background: '#1e293b',
+				primaryColor: '#131d31',
+				primaryTextColor: '#38bdf8',
+				lineColor: '#334155',
+				fontSize: '12px',
+				fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
+			}
+		});
+	});
+</script>

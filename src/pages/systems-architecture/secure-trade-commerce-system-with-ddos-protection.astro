@@ -1,0 +1,151 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// We store the graph as a raw string to bypass Astro's auto-escaping logic
+const mermaidGraph = `graph TB
+    subgraph internet["Internet / Open Commerce Marketplace"]
+        users["👥 Users"]
+    end
+
+    subgraph captchaCluster["🔐 CAPTCHA Cluster Public Hardened Network"]
+        ipfire["IPFire Box<br/>10Gbit Dedicated<br/>Multi-NIC Load Balancer"]
+        
+        subgraph captchaContainers["Captcha Containers Scaled by Bandwidth"]
+            cap1["Container 1<br/>10Mbit Bandwidth<br/>Node.js Captcha"]
+            cap2["Container 2<br/>10Mbit Bandwidth<br/>Node.js Captcha"]
+            capN["Container N<br/>10Mbit Bandwidth<br/>Node.js Captcha"]
+        end
+        
+        puzzleCache["Pre-Generated Emoji Puzzles<br/>Static Cache<br/>Thousands Flat Files"]
+        
+        redisC1[("Redis Cluster<br/>CAPTCHA<br/>Token Sync")]
+    end
+
+    subgraph platformCluster["🚀 Platform Cluster Private Network"]
+        tokenVerify{"Token & Signature<br/>Verification<br/>Header Check"}
+        
+        subgraph loginContainers["Login Containers Bandwidth Limited"]
+            login1["Container 1<br/>Login Handler<br/>Max 60min Session"]
+            login2["Container 2<br/>Login Handler<br/>Max 60min Session"]
+            loginN["Container N<br/>Login Handler<br/>Max 60min Session"]
+        end
+        
+        subgraph appServers["Application Layer"]
+            phpFront["PHP Frontend<br/>Web Interface"]
+            nodeAPI["Node.js Backend API"]
+        end
+        
+        subgraph dataLayer["Data Layer"]
+            proxysql["ProxySQL<br/>Connection Pool"]
+            mysql[("MySQL Primary<br/>+ Multi Read<br/>Replicas")]
+        end
+        
+        redisC2[("Redis Cluster<br/>Platform<br/>2 Nodes")]
+        
+        subgraph queueSystem["Queue System"]
+            queue["Write Queue<br/>Products & Transactions"]
+        end
+        
+        subgraph transactionSystem["🔗 Separated Transaction System"]
+            txProcessor["Transaction Processor"]
+            txDB[("Transaction DB")]
+        end
+    end
+
+    users -->|"Puzzle Request"| ipfire
+    ipfire -->|"Load Balanced"| cap1
+    ipfire -->|"Load Balanced"| cap2
+    ipfire -->|"Load Balanced"| capN
+    
+    cap1 -->|"Load Puzzles"| puzzleCache
+    cap2 -->|"Load Puzzles"| puzzleCache
+    capN -->|"Load Puzzles"| puzzleCache
+    
+    cap1 -->|"Sync Token"| redisC1
+    cap2 -->|"Sync Token"| redisC1
+    capN -->|"Sync Token"| redisC1
+    
+    cap1 -->|"Timed Token + Redirect"| tokenVerify
+    cap2 -->|"Timed Token + Redirect"| tokenVerify
+    capN -->|"Timed Token + Redirect"| tokenVerify
+    
+    redisC1 -.->|"Verify Token"| redisC2
+    
+    tokenVerify -->|"Token Valid?"| login1
+    tokenVerify -->|"Token Valid?"| login2
+    tokenVerify -->|"Token Valid?"| loginN
+    
+    login1 -->|"User/Pass Auth"| phpFront
+    login2 -->|"User/Pass Auth"| phpFront
+    loginN -->|"User/Pass Auth"| phpFront
+    
+    phpFront -->|"API Calls"| nodeAPI
+    nodeAPI -->|"Query"| proxysql
+    proxysql -->|"Read/Write"| mysql
+    
+    nodeAPI -->|"Session Cache"| redisC2
+    phpFront -->|"Session Cache"| redisC2
+    
+    nodeAPI -->|"Queue Writes"| queue
+    queue -->|"Process"| nodeAPI
+    
+    nodeAPI -->|"Transaction Request"| txProcessor
+    txProcessor -->|"Persist"| txDB
+    txProcessor -->|"Callback"| nodeAPI
+
+    classDef captchaNet stroke:#f87171,fill:#1e1b4b,color:#cbd5e1;
+    classDef platformNet stroke:#4ade80,fill:#022c22,color:#cbd5e1;
+    classDef container stroke:#38bdf8,fill:#0c4a6e,color:#cbd5e1;
+    classDef cache stroke:#a78bfa,fill:#2e1065,color:#cbd5e1;
+    classDef database stroke:#fb923c,fill:#431407,color:#cbd5e1;
+    classDef process stroke:#2dd4bf,fill:#115e59,color:#cbd5e1;
+    classDef security stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+    
+    class captchaCluster captchaNet;
+    class platformCluster platformNet;
+    class cap1,cap2,capN,login1,login2,loginN container;
+    class puzzleCache,redisC1,redisC2 cache;
+    class mysql,txDB database;
+    class nodeAPI,phpFront,queue,txProcessor process;
+    class tokenVerify security;`;
+---
+<Layout title="Secure Trade Commerce System with DDoS Protection | Architecture">
+    <h1>Case Study: Secure Trade Commerce System with Edge DDoS Protection</h1>
+    
+    <blockquote>
+        <strong>System Overview:</strong> A hardened distributed infrastructure pattern designed to survive heavy application-layer (Layer 7) DDoS attacks targeting an open commerce marketplace. By establishing a decoupled, bandwidth-constrained CAPTCHA verification outer perimeter, the high-cost application platform cluster is completely isolated from unauthenticated volumetric requests.
+    </blockquote>
+
+    <hr style="border: 0; border-top: 1px solid #334155; margin: 2em 0;" />
+
+    <h2>System Architecture Diagram</h2>
+
+    <div class="mermaid" set:html={mermaidGraph}></div>
+
+    <h2>Core Security Implementations</h2>
+    
+    <h3>1. Edge Isolation & Bandwidth Throttling</h3>
+    <ul>
+        <li><strong>10Gbit Ingress Load Balancing:</strong> A dedicated IPFire appliance serves as the perimeter security gateway, absorbing initial Layer 4 floods and fanning traffic out to the CAPTCHA network nodes.</li>
+        <li><strong>Strict Container Bandwidth Allocation:</strong> CAPTCHA processing containers are severely network-limited (10Mbit per container). If an attacker targets an active verification endpoint, they quickly fill that specific container's pipe without impacting the wider host platform's bandwidth.</li>
+    </ul>
+
+    <h3>2. Low-Compute Challenge Generation</h3>
+    <ul>
+        <li><strong>Flat File Static Caching:</strong> To protect container CPUs from being burned during a puzzle generation rush, thousands of pre-generated puzzle matrices are stored as raw static files, allowing near-instantaneous memory mapping and zero-compute delivery.</li>
+    </ul>
+
+    <h3>3. Decoupled Transaction Engine</h3>
+    <ul>
+        <li><strong>Asynchronous State Separation:</strong> Database writes for core platform updates go directly to a resilient broker queue, preventing database table locks from taking down user authentication handlers. The structural transaction loop is executed in a highly secure, completely isolated runtime context.</li>
+    </ul>
+
+    <script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script is:inline>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose'
+        });
+    </script>
+</Layout>
