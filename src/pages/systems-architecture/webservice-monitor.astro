@@ -1,0 +1,130 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Edge Telemetry Fabric & Anomaly Interception | Josh James">
+    <div class="border-b border-[#334155] pb-4 mb-6">
+        <h1>/sys/portfolio/web-service-monitor</h1>
+        <p class="text-xs text-[#64748b] font-mono mt-1">SYSTEM ARCHITECTURE: EMBEDDED STREAM TELEMETRY & ENVIRONMENT-AGNOSTIC LAUNCHPADS</p>
+    </div>
+
+    <div class="space-y-8 font-sans text-sm text-[#cbd5e1] leading-relaxed w-full">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs">
+            <div><span class="text-[#64748b] block">REPOSITORY:</span> github.com/joshjames/...</div>
+            <div><span class="text-[#64748b] block">INGEST ENGINES:</span> Nginx / HAProxy / AWS ALB</div>
+            <div><span class="text-[#64748b] block">TELEMETRY AGENT:</span> Vector Remap Engine (VRL)</div>
+            <div><span class="text-[#64748b] block">AUTOMATION CORE:</span> Terraform Modules / GHA</div>
+        </div>
+
+        <section class="space-y-3">
+            <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Operational Context & Thesis</h3>
+            <p>
+                In high-volume enterprise architectures, edge-level application errors (like <code>502 Bad Gateway</code> or <code>504 Gateway Timeout</code>) often indicate cascading upstream system exhaustion. Relying entirely on heavy, centralized monitoring platforms to parse these failures can be expensive and slow, introducing significant telemetry delay right when a critical incident hits.
+            </p>
+            <p>
+                This project builds a highly portable, event-driven monitoring pattern designed to address this challenge. It implements an embedded, real-time log-scraping edge layer that extracts and isolates specific system anomalies straight from raw ingress connection streams. 
+            </p>
+            <p>
+                By building the platform configuration model using an abstract, engine-agnostic approach, the entire telemetry stack functions as an open-source tool repo. A developer can quickly switch between local testing environments, bare-metal Kubernetes setups, or production cloud infrastructures using a single configuration file.
+            </p>
+        </section>
+
+        <section class="space-y-3">
+            <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Architecture & Stream Processing Topography</h3>
+            <p class="text-xs text-[#64748b]">The telemetry compilation flow handles everything from reading configuration inputs to executing live validation loops (Swipe horizontally to pan across the architecture tree):</p>
+            
+            <div class="bg-[#1e293b] p-4 rounded border border-[#334155] overflow-x-auto touch-pan-x select-none min-w-full">
+                <div class="mermaid min-w-[750px] lg:min-w-0">
+                graph LR
+                    classDef conf stroke:#34d399,fill:#115e59,color:#cbd5e1;
+                    classDef engine stroke:#38bdf8,fill:#1e3a8a,color:#cbd5e1;
+                    classDef agent stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+                    classDef monitor stroke:#f472b6,fill:#301121,color:#cbd5e1;
+
+                    Config[config.yaml Matrix] -->|"1. Parse Configuration Schema"| TF[Terraform Factory Engine]
+                    
+                    TF -->|"2A. Provision Local Target"| Docker[Docker Container Environment]
+                    TF -->|"2B. Provision Cloud Target"| AWS[AWS ALB & EC2 Fleet Environments]
+                    
+                    Docker --> Logs[Raw Ingress Access Streams]
+                    AWS --> Logs
+                    
+                    Logs -->|"3. Stream Log Lines"| Vector[Vector Interception Pipeline]
+                    Vector -->|"4. Execute Regex Filter (VRL)"| Metrics{Anomaly Identified?}
+                    
+                    Metrics -->|No: Drop Noise| Null[Drop Traffic]
+                    Metrics -->|Yes: Process Payload| Prom[Expose Prometheus Metrics]
+                    
+                    Prom -->|"5. Render Observability"| Grafana[Grafana Operational Dashboard]
+
+                    class Config conf;
+                    class TF,Docker,AWS engine;
+                    class Logs,Vector,Metrics agent;
+                    class Prom,Grafana monitor;
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-4">
+            <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Key Technical Implementation Focus Areas</h3>
+            
+            <div class="space-y-4 font-mono text-xs text-[#cbd5e1]">
+                <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                    <strong class="text-[#38bdf8] block">1. Decoupled Provider Mappings & Abstract IaC Shells</strong>
+                    <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                        The underlying infrastructure templates use nested logic expressions to decode configuration choices. Instead of tying resource definitions to a single environment, the workspace maps internal configurations out to either local container volumes or high-availability cloud target definitions depending on your chosen parameters.
+                    </p>
+                </div>
+
+                <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                    <strong class="text-[#38bdf8] block">2. Fast, Low-Memory Log Scrapers (Vector Remap Engine)</strong>
+                    <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                        To process log lines with minimal compute overhead, the platform uses an embedded stream filtering agent configured with custom processing rules. The agent screens incoming telemetry strings, drops routine <code>200 OK</code> traffic to prevent logging inflation, and transforms specific error conditions directly into native monitoring metrics.
+                    </p>
+                </div>
+
+                <div class="bg-[#1e293b]/50 p-4 rounded border border-[#334155] space-y-2">
+                    <strong class="text-[#38bdf8] block">3. Automated Integration Validation Workflows</strong>
+                    <p class="text-xs text-[#94a3b8] font-sans leading-relaxed">
+                        The repository features a fully integrated automation workflow powered by GitHub Actions. Every single commit triggers an automated staging cycle that sets up an isolated environment, injects simulated backend failure loops, reads metrics processing responses, and verifies system integrity before changes reach production.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3">
+            <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Production Dashboard Insights</h3>
+            <p>
+                The metrics generated by the telemetry agent feed straight into an optimized Grafana dashboard configuration file. Rather than tracking broad system metrics like general CPU utilization, this view acts as an operational control layout dedicated to security, networking, and engineering teams:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs text-[#cbd5e1]">
+                <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong class="text-[#38bdf8]">Edge Health Percentage:</strong> Live ratio chart measuring standard success operations directly against edge failure spikes.</div>
+                <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong class="text-[#38bdf8]">HTTP 5xx Error Timelines:</strong> Time-series graphs tracking error volume across paths to catch localized API route failures.</div>
+                <div class="bg-[#1e293b]/40 border border-[#334155] p-3 rounded">• <strong class="text-[#38bdf8]">Threshold Alert Engine:</strong> Visual alert states that shift to active warning flags the moment failure counts cross set safety parameters.</div>
+            </div>
+            <p class="pt-2">
+                This project provides an effective pattern for teams seeking a clean, fast, and highly portable monitoring setup, proving that reliable system observability can be achieved across any deployment target without enterprise complexity.
+            </p>
+        </section>
+
+    </div>
+</Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        mermaid.initialize({
+            theme: 'dark',
+            startOnLoad: true,
+            securityLevel: 'loose',
+            themeVariables: {
+                background: '#1e293b',
+                primaryColor: '#131d31',
+                primaryTextColor: '#38bdf8',
+                lineColor: '#334155',
+                fontSize: '12px',
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace'
+            }
+        });
+    });
+</script>
