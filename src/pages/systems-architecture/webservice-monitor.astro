@@ -1,5 +1,36 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+// FIX: Abstracted the Mermaid diagram string to prevent the Astro template parser 
+// from evaluating the node definition brackets {} as JSX/JavaScript expressions.
+const architectureDiagram = `
+graph LR
+    classDef conf stroke:#34d399,fill:#115e59,color:#cbd5e1;
+    classDef engine stroke:#38bdf8,fill:#1e3a8a,color:#cbd5e1;
+    classDef agent stroke:#e879f9,fill:#581c87,color:#cbd5e1;
+    classDef monitor stroke:#f472b6,fill:#301121,color:#cbd5e1;
+
+    Config[config.yaml Matrix] -->|"1. Parse Configuration Schema"| TF[Terraform Factory Engine]
+    
+    TF -->|"2A. Provision Local Target"| Docker[Docker Container Environment]
+    TF -->|"2B. Provision Cloud Target"| AWS[AWS ALB & EC2 Fleet Environments]
+    
+    Docker --> Logs[Raw Ingress Access Streams]
+    AWS --> Logs
+    
+    Logs -->|"3. Stream Log Lines"| Vector[Vector Interception Pipeline]
+    Vector -->|"4. Execute Regex Filter (VRL)"| Metrics{Anomaly Identified?}
+    
+    Metrics -->|No: Drop Noise| Null[Drop Traffic]
+    Metrics -->|Yes: Process Payload| Prom[Expose Prometheus Metrics]
+    
+    Prom -->|"5. Render Observability"| Grafana[Grafana Operational Dashboard]
+
+    class Config conf;
+    class TF,Docker,AWS engine;
+    class Logs,Vector,Metrics agent;
+    class Prom,Grafana monitor;
+`;
 ---
 <Layout title="Edge Telemetry Fabric & Anomaly Interception | Josh James">
     <div class="border-b border-[#334155] pb-4 mb-6">
@@ -35,32 +66,7 @@ import Layout from '../../layouts/Layout.astro';
             
             <div class="bg-[#1e293b] p-4 rounded border border-[#334155] overflow-x-auto touch-pan-x select-none min-w-full">
                 <div class="mermaid min-w-[750px] lg:min-w-0">
-                graph LR
-                    classDef conf stroke:#34d399,fill:#115e59,color:#cbd5e1;
-                    classDef engine stroke:#38bdf8,fill:#1e3a8a,color:#cbd5e1;
-                    classDef agent stroke:#e879f9,fill:#581c87,color:#cbd5e1;
-                    classDef monitor stroke:#f472b6,fill:#301121,color:#cbd5e1;
-
-                    Config[config.yaml Matrix] -->|"1. Parse Configuration Schema"| TF[Terraform Factory Engine]
-                    
-                    TF -->|"2A. Provision Local Target"| Docker[Docker Container Environment]
-                    TF -->|"2B. Provision Cloud Target"| AWS[AWS ALB & EC2 Fleet Environments]
-                    
-                    Docker --> Logs[Raw Ingress Access Streams]
-                    AWS --> Logs
-                    
-                    Logs -->|"3. Stream Log Lines"| Vector[Vector Interception Pipeline]
-                    Vector -->|"4. Execute Regex Filter (VRL)"| Metrics{Anomaly Identified?}
-                    
-                    Metrics -->|No: Drop Noise| Null[Drop Traffic]
-                    Metrics -->|Yes: Process Payload| Prom[Expose Prometheus Metrics]
-                    
-                    Prom -->|"5. Render Observability"| Grafana[Grafana Operational Dashboard]
-
-                    class Config conf;
-                    class TF,Docker,AWS engine;
-                    class Logs,Vector,Metrics agent;
-                    class Prom,Grafana monitor;
+                    {architectureDiagram}
                 </div>
             </div>
         </section>
