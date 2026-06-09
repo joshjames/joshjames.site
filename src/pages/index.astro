@@ -1,38 +1,258 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-<Layout title="Josh James | Systems Infrastructure">
-    <h1>[JJ] /usr/bin/josh-james --overview</h1>
-    <blockquote>
-        Senior DevOps, Distributed Systems, & Infrastructure Engineer. <br/>
-        20+ years turning high-scale infrastructural chaos into deterministic, automated pipelines.
-    </blockquote>
-    <hr style="border: 0; border-top: 1px solid #334155; margin: 2em 0;" />
-    <h2>Technical Core Focus</h2>
-    <ul>
-        <li><strong>Scale & Topology:</strong> High-Performance Computing, Zero-Trust Multi-Cloud Architecture (AWS, Azure, GCP).</li>
-        <li><strong>Distributed Systems:</strong> Message queues, decoupled worker groups, state synchronization sagas, and atomic data alignment.</li>
-        <li><strong>Infrastructure as Code:</strong> Production-hardened Terraform, Bicep, Helm, and native Kubernetes scheduling.</li>
-        <li><strong>Bare Metal & AI:</strong> Homelab cluster orchestration, local LLM/RAG training pipelines, and GPU cluster engineering.</li>
-    </ul>
-    <h2>Featured Engineering Deep Dives</h2>
-    <h3>01. The Monero Swap Engine & Decoupled Crypto API</h3>
-    <p>A highly scalable, production-grade cryptocurrency swap engine utilizing a distributed transaction saga pattern. <br/>
-    <a href="/systems-architecture/monero-swap-engine">View Architecture Breakdown & Code Engine -></a></p>
-    <h3>02. Secure Trade Commerce System with Edge DDoS Protection</h3>
-    <p>An enterprise-grade perimeter isolation architecture leveraging independent CAPTCHA clusters and strict egress container limits.<br/>
-    <a href="/systems-architecture/secure-trade-commerce-system-with-ddos-protection">View Security Topology Diagram & Specifications -></a></p>
-    <h3>03. AutoPilot Solutions: Selected Consulting Portfolios</h3>
-    <p>Architectural execution for enterprise clients (Woolworths, Virgin Australia) and greenfield venture setups.<br/>
-    <a href="/systems-architecture/autopilot-consultancy">Explore AutoPilot Vault -></a></p>
-    <h3>04. Bare Metal Sandbox (Homelab)</h3>
-    <p>A deep dive into my private 42RU data center environment running autonomous containerized microservices.<br/>
-    <a href="/homelab-infrastructure">Inspect the Infrastructure -></a></p>
-    <h3>05. VapeFinder.com.au — Distributed Discovery Engine</h3>
-    <p>A mobile-first spatial allocation engine built with Next.js App Router and obfuscated geolocation clustering.<br/>
-    <a href="/systems-architecture/vapefinder-platform-deep-dive">View Platform Layout & System Post-Mortem -></a></p>
-    ---
-    <h3>External Sources & Links</h3>
-    <p>CV - Github - Linkedin </p>
-[Terminal CV](/cv) //  <a href="https://github.com/joshjames"> Github - Joshjames </a> // <a href="http://au.linkedin.com/in/joshjsaunders">[LinkedIn]</a>
+
+<Layout title="Josh James | Systems & Platform Infrastructure">
+    <div class="max-w-3xl space-y-12">
+        
+        <section class="space-y-4">
+            <h1 class="text-[#34d399] font-mono text-xl sm:text-2xl font-bold tracking-tight border-none p-0 m-0">
+                Hi, I'm Josh.
+            </h1>
+            <p class="text-base text-[#cbd5e1] leading-relaxed">
+                I'm a senior infrastructure and platform engineer with over twenty years of experience running large-scale networks, computing environments, and automated pipelines. I specialize in looking at messy, manual system bottlenecks and converting them into reliable, well-monitored infrastructure that scales predictably.
+            </p>
+            <p class="text-sm text-[#94a3b8] leading-relaxed">
+                This site is a personal technical space where I break down the architecture of past enterprise platforms I've worked on, ongoing software ideas I'm testing, and sandbox experiments running inside my private hardware rack. 
+            </p>
+            <div class="bg-[#1e293b]/40 border border-[#334155] p-4 rounded text-xs text-[#94a3b8] font-mono">
+                <span class="text-[#34d399] font-bold">Looking for your next engineering partner?</span> I love collaborating on hard scaling problems, zero-trust infrastructure, and automation systems. If you have a project or just want to swap technical ideas, please feel free to <a href="/contact" class="text-[#38bdf8] hover:underline">reach out to me directly</a>.
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <div class="border-b border-[#334155] pb-2">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-[#64748b] font-bold m-0 p-0">
+                    // Operational Updates & Engineering Deep Dives
+                </h2>
+            </div>
+
+            <div class="space-y-10">
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2026-06" class="text-[#64748b]">June 2026</time>
+                        <span class="text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Current Project Core]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/webservice-monitor" class="text-inherit hover:underline">
+                            Abstract Telemetry Fabric & Event-Driven Monitors
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        An open-source, engine-agnostic log extraction framework driven by a single configuration matrix. Uses dynamic Terraform providers and Vector to intercept HTTP anomalies at the ingress tier before downstream analytics systems saturate.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#terraform</span> <span>#github-actions</span> <span>#vector</span> <span>#observability</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2026-04" class="text-[#64748b]">April 2026</time>
+                        <span class="text-[#e879f9] bg-[#e879f9]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [General Article / Idea]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/blog/agentic-ai-network" class="text-inherit hover:underline">
+                            Building Resilient Compute Networks for Agentic AI Teams
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        An analysis of specialized networking layouts needed to support local, coordinating AI models. Focuses on keeping processing times low, managing bandwidth consumption, and ensuring secure communication contexts between agents.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#ai-infrastructure</span> <span>#distributed-systems</span> <span>#networking</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2026-02" class="text-[#64748b]">February 2026</time>
+                        <span class="text-[#34d399] bg-[#34d399]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Past Platform Architecture]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/woolworths-ecom-scalability" class="text-inherit hover:underline">
+                            Remediating High-Concurrency E-Commerce Checkouts
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        A retrospective breakdown of a major cloud migration and performance optimization project. Reconstructed complex, fragile payment processing paths into scalable, decoupled systems capable of handling large transaction surges without backend database degradation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#aws</span> <span>#remediation</span> <span>#kubernetes</span> <span>#high-scale</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2025-11" class="text-[#64748b]">November 2025</time>
+                        <span class="text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Current Project Core]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/monero-swap-engine" class="text-inherit hover:underline">
+                            Distributed Saga Matching & Asset Swap Processing Nodes
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        Designing a decentralized order-matching matrix that runs without a single coordinating point of failure. Implements atomic data tracking and independent micro-worker pools to guarantee processing reliability across distributed ledger endpoints.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#saga-pattern</span> <span>#monero</span> <span>#go</span> <span>#asynchronous-queues</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2025-08" class="text-[#64748b]">August 2025</time>
+                        <span class="text-[#34d399] bg-[#34d399]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Past Platform Architecture]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/secure-trade-commerce-system-with-ddos-protection" class="text-inherit hover:underline">
+                            Isolating Perimeter Edges Against Distributed Traffic Inundation
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        Re-architecting e-commerce request endpoints under active exploit stress. Built an external verification cluster coupled with strict container routing rules to block anomalous traffic scripts before reaching internal applications.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#security</span> <span>#ddos-mitigation</span> <span>#network-security</span> <span>#waf</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2025-05" class="text-[#64748b]">May 2025</time>
+                        <span class="text-[#e879f9] bg-[#e879f9]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [General Article / Idea]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/blog/foolproof-ai-detection" class="text-inherit hover:underline">
+                            Algorithmic Drift and Constraints in AI Pattern Identification
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        An inquiry examining the mechanics of text statistical metrics. Breaks down why standard data patterns render conventional AI code detection platforms unreliable over longer horizons.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#ai-research</span> <span>#data-science</span> <span>#pattern-analysis</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2025-03" class="text-[#64748b]">March 2025</time>
+                        <span class="text-[#34d399] bg-[#34d399]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Past Platform Architecture]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/skyramp-global-vpn" class="text-inherit hover:underline">
+                            Orchestrating Highly Scalable Virtual Private Network Meshes
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        Automating cloud network endpoints across multiple global regions. Built using optimized kernel configurations and infrastructure templates to maintain consistent data rates across complex connections.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#vpn-mesh</span> <span>#wireguard</span> <span>#global-networking</span> <span>#automation</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2024-12" class="text-[#64748b]">December 2024</time>
+                        <span class="text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Current Project Core]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/axiom" class="text-inherit hover:underline">
+                            Axiom: Specialized Data Indexing Layers
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        A personal software experiment exploring customized file indexing layouts. Developed to investigate low-overhead retrieval logic when working with highly fragmented structured datasets.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#systems-programming</span> <span>#database-design</span> <span>#storage-engines</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2024-09" class="text-[#64748b]">September 2024</time>
+                        <span class="text-[#34d399] bg-[#34d399]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Past Platform Architecture]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/vapefinder-platform-deep-dive" class="text-inherit hover:underline">
+                            Spatial Indexing & Lookup Mechanics for Discovery Applications
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        A project review of a location-based search application. Implemented geometric grouping matrices and caching structures to handle fast mobile search requests without exposing underlying database assets to scrapers.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#geolocation</span> <span>#spatial-indexing</span> <span>#nextjs</span> <span>#api-hardening</span>
+                    </div>
+                </article>
+
+                <article class="space-y-2 group">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+                        <time datetime="2024-05" class="text-[#64748b]">May 2024</time>
+                        <span class="text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded text-[11px] font-semibold">
+                            [Current Project Core]
+                        </span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#cbd5e1] group-hover:text-[#34d399] transition-colors m-0 p-0">
+                        <a href="/systems-architecture/autoplatform" class="text-inherit hover:underline">
+                            AutoPlatform: Declarative Fleet Deployment Frameworks
+                        </a>
+                    </h3>
+                    <p class="text-sm text-[#94a3b8] leading-relaxed">
+                        An internal automation stack developed to configure remote operating system footprints cleanly. Eliminates drift across distributed computing instances by verifying device matrices against a single declarative specification file.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-[#64748b]">
+                        <span>#configuration-management</span> <span>#fleet-automation</span> <span>#linux</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="pt-6 border-t border-[#334155] space-y-4">
+            <h2 class="text-xs font-mono uppercase tracking-widest text-[#64748b] font-bold m-0 p-0">// Verified External Channels</h2>
+            <div class="flex flex-wrap gap-x-6 gap-y-3 text-xs font-mono">
+                <a href="/cv" class="flex items-center gap-2 hover:text-[#34d399] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>[Terminal CV]</span>
+                </a>
+                <a href="https://github.com/joshjames" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-[#34d399] transition-colors">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    <span>[GitHub Profile]</span>
+                </a>
+                <a href="http://au.linkedin.com/in/joshjsaunders" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-[#34d399] transition-colors">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <span>[LinkedIn Profile]</span>
+                </a>
+                <a href="/contact" class="flex items-center gap-2 hover:text-[#34d399] transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <span>[Secure Contact Page]</span>
+                </a>
+            </div>
+        </section>
+
+    </div>
 </Layout>
