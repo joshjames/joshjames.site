@@ -1,0 +1,12 @@
+# Ignore document editor temporary lockfiles
+**/.~lock.*
+.~lock.*
+*~
+~$*
+
+# Standard project ignore layers
+.git
+.gitignore
+node_modules
+dist
+.astro

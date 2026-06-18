@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Bypasses Astro HTML compression by defining the diagram syntax as an isolated string literal constant
+const joshflixTopology = `graph TD
+    classDef hardware stroke:#f472b6,fill:#301121,color:#cbd5e1;
+    classDef engine stroke:#fb923c,fill:#431407,color:#cbd5e1;
+    classDef apiLayer stroke:#2dd4bf,fill:#115e59,color:#cbd5e1;
+    classDef storage stroke:#38bdf8,fill:#0c4a6e,color:#cbd5e1;
+
+    User([Web Browser UI]) -->|"1. Browse & Search"| Server[Node/Express Server:3000]
+    User -->|"2. Click 'Add to Library'"| Server
+    
+    subgraph IngestionLayer ["1. Ingestion & Download Bridge"]
+        Server -->|"3. POST Tagged Magnet"| QB[qBittorrent Container:8080]
+        QB -->|"4. Writes Raw Media"| Storage[(Mounted Vol: /movies)]
+    end
+
+    subgraph AutomationLayer ["2. Asynchronous Automation Pipeline"]
+        Server -->|"5. Polls Completion"| QB
+        Server -->|"6. Execute Script Chain"| Sanitizer[library-sanitizer.js]
+        Sanitizer -->|"7. Strip Junk Files"| Transcoder[pre-transcode.js]
+        Transcoder -->|"8. Drop .processing Lock & Run"| FFmpeg[FFmpeg Transcode Loop]
+        FFmpeg -->|"9. Output web.mp4"| Storage
+    end
+
+    User -->|"10. High-Perf Progressive Stream"| Server
+
+    %% Layout Styling Rules
+    class User hardware;
+    class QB engine;
+    class Server,Sanitizer,Transcoder,FFmpeg apiLayer;
+    class Storage storage;
+`;
+---
+<Layout title="JoshFlix v3: Building a Stateless, Database-Less Home Streaming Architecture | Josh James">
+
+        <div class="border-b border-[#334155] pb-4 mb-6">
+            <h1>/sys/portfolio/joshflix-v3</h1>
+            <p class="text-xs text-[#64748b] font-mono mt-1">ENGINE OVERVIEW: DECOUPLED AUTOMATED MEDIA WORKFLOW WITHOUT DATABASE REQUISITES</p>
+        </div>
+
+        <div class="space-y-8 font-sans text-sm text-[#cbd5e1] leading-relaxed">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs">
+                <div><span class="text-[#64748b] block">STATUS:</span> OPERATIONAL / LIVE</div>
+                <div><span class="text-[#64748b] block">SERVICE CODE:</span> "STREAMENGINE-NODE"</div>
+                <div><span class="text-[#64748b] block">ARCHITECTURE:</span> Stateless / Flat FS</div>
+                <div><span class="text-[#64748b] block">DEPENDENCIES:</span> Node, qBit, FFmpeg</div>
+            </div>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// The Case Against Media Server Bloat</h3>
+                <p>
+                    After running a self-hosted Plex server followed by Jellyfin for years, maintaining a private media center has become a staple of my homelab infrastructure. However, over time, I found myself increasingly annoyed by the growing feature bloat, memory footprint, and aggressive resource hogging of modern media servers. For what has effectively become a commoditized technology—progressive web video streaming—I wanted something leaner. With the modern maturity of codecs like x264 and efficient HTTP byte-range seeking, it is entirely possible to roll your own private "Netflix" without the massive overhead.
+                </p>
+                <p>
+                    JoshFlix v1 and v2 were eventually lost to the data gods, but the architectural lessons survived. For <strong>JoshFlix v3</strong>, the engineering goal was unyielding: build a completely lightweight, deterministic, <strong>database-less</strong> home streaming stack. 
+                </p>
+                <p>
+                    I wanted instant access, universal device compatibility, and an elegant UI. More importantly, I wanted to solve the classic "Sunday at 7:00 PM" problem—where you think of a film you want to watch, only to realize it isn't available on any of the five paid subscription services you subscribe to. By combining upstream search APIs, deep data sanitization, asynchronous transcoding pipelines, and automated torrent ingestion, JoshFlix v3 delivers a zero-maintenance, self-assembling media ecosystem.
+                </p>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Key Feature Milestones in v3</h3>
+                <div class="bg-[#1e293b]/40 border border-[#334155] rounded p-4 font-mono text-xs text-[#cbd5e1] space-y-3">
+                    <p><strong class="text-[#38bdf8]">* Database-Less State Engine:</strong> Zero database footprint. Active tracking metadata is written straight to disk alongside the assets. Active states are calculated on the fly by combining active torrent client RPC queries and localized filesystem indicators.</p>
+                    <p><strong class="text-[#38bdf8]">* Massive Public Catalog Intercept:</strong> Integrated proxy routers query lightweight public REST APIs on the fly, instantly surfacing a catalog of over 30,000 movies and 10,000 TV shows complete with cover graphics and IMDb ratings.</p>
+                    <p><strong class="text-[#38bdf8]">* One-Click Ingestion Pipeline:</strong> Builds high-availability magnet URIs dynamically, instantly pushing them to qBittorrent via its Web API with isolated custom network workflow tags (<code class="text-[#f472b6]">movie-streamer</code>).</p>
+                    <p><strong class="text-[#38bdf8]">* Universal FFmpeg Transcoding:</strong> Media files are recursively processed via an asynchronous x264/AAC encoding loop, ensuring immediate video container availability, rapid seeking performance, and instant startup times across native HTML5 players.</p>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Visual Dashboard Interface</h3>
+                <p>
+                    The UI presents a clean, responsive web interface focused entirely on utility, displaying live status tracking bars during ingest and media transcoding states.
+                </p>
+                <div class="bg-[#1e293b] border border-[#334155] rounded p-8 text-center text-xs font-mono text-[#64748b]">
+                    <img src="/images/joshflix.png" alt="joshflix ui" class="w-600 h-400 object-cover/>
+                </div>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Project Directory Topology</h3>
+                <p>
+                    The layout relies entirely on predictable path routing and localized JSON tracking manifests rather than an absolute schema database layer:
+                </p>
+                <pre class="bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs overflow-x-auto text-[#e2e8f0] whitespace-pre">
+.
+├── movies/                       # Mounted media volumes container layer
+│   └── [Movie-Folder-Name]/
+│       ├── Cover.jpg             # Local cover graphic asset
+│       ├── Metadata.json         # Localized data record track
+│       ├── Video_File.mp4        # Raw source file wrapper
+│       ├── Video_File.web.mp4    # Optimized target asset container
+│       └── .processing           # Transient state lock-file indicator
+├── public/                       # Frontend assets directory
+│   ├── index.html                # Media gallery dashboard
+│   ├── browse.html               # YTS API catalog crawler component
+│   └── player.html               # HTML5 media player interface
+├── server.js                     # Core Express engine router and streaming controller
+├── library-sanitizer.js          # File structure normalization automation script
+├── pre-transcode.js              # Recursive sequential FFmpeg x264/AAC transcode worker
+└── package.json                  # Node dependencies configuration manifest</pre>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// Deep Dive: The Automation Pipeline Workflow</h3>
+                <p>
+                    When a user triggers an ingestion sequence via the web catalog layer, the payload lands on <code class="bg-[#1e293b] px-1 py-0.5 rounded text-[#f472b6]">/api/yts/add</code> and transfers straight to the backend container interfaces. While downloading, files remain invisible to prevent partial-file errors on the UI.
+                </p>
+                <p>
+                    Once the download status hits 100%, the engine executes <code class="bg-[#1e293b] px-1 py-0.5 rounded text-[#38bdf8]">library-sanitizer.js</code> to clean out subtitle junk, metadata garbage, and sample clips. Before passing the cleaned file to the transcode worker, the system drops a zero-byte <code class="bg-[#1e293b] px-1 py-0.5 rounded text-[#f472b6]">.processing</code> file into the directory. This instantly updates the frontend monitor dashboard with an <strong>Optimizing (Pre-Transcoding)</strong> status indicator.
+                </p>
+                <p>
+                    The orchestration worker then fires up an isolated asynchronous FFmpeg subprocess to optimize the container framework:
+                </p>
+                <pre class="bg-[#1e293b] p-4 rounded border border-[#334155] font-mono text-xs overflow-x-auto text-[#34d399]">
+ffmpeg -i Source_File.mkv -c:v libx264 -pix_fmt yuv420p -profile:v high -level 4.1 -crf 20 -c:a aac -b:a 163k -movflags +faststart Video_File.web.mp4</pre>
+                <p>
+                    The configuration flag <code class="text-[#fb923c] font-bold">-movflags +faststart</code> shifts the index metadata (the moov atom) to the very front of the generated stream. This avoids forcing a web browser to parse a multi-gigabyte video container back-to-front, enabling instant-start playback and flawless timeline seeking speeds.
+                </p>
+            </section>
+
+            <section class="space-y-3">
+                <h3 class="text-[#34d399] font-mono text-xs uppercase tracking-widest font-bold">// High-Performance Delivery & Future Vectors</h3>
+                <p>
+                    Streaming is executed directly inside <code class="bg-[#1e293b] px-1 py-0.5 rounded text-[#2dd4bf]">server.js</code> utilizing HTTP Byte-Range requests (HTTP Status <code class="text-[#fb923c]">206 Partial Content</code>). When a client scrubs across a timeline, the browser passes specific range headers, allowing the Express router to stream granular file descriptor blocks straight off disk arrays with a near-zero memory footprint.
+                </p>
+                <p>
+                    Future updates to the code base will integrate automated subtitle stream normalization, an installable Progressive Web App (PWA) wrapper for edge mobile optimization, and load-balanced reverse proxy configuration parameters for seamless global distribution.
+                </p>
+            </section>
+
+        </div>
+</Layout>
